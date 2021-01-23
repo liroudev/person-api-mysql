@@ -36,7 +36,8 @@ namespace PersonAPI_Mysql.Service.Implementations
 
         public Person FindbyId(int id)
         {
-            throw new System.NotImplementedException();
+            var person = _mysqlContext.Persons.Where(p => p.Id == id).FirstOrDefault();
+            return person;
         }
 
 

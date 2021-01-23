@@ -26,9 +26,41 @@ namespace PersonAPI_Mysql.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(string id)
         {
-            return Ok();
+            if(!IsNumeric(id))
+            {
+                return BadRequest("Invalid input");
+            }
+
+            var idConvertido = ConvertToInt(id);
+            var person = _personService.FindbyId(idConvertido);
+            return Ok(person);
+        }
+
+
+        private bool IsNumeric(string number)
+        {
+            var isNumber = false;
+
+            isNumber = int.TryParse(number,System.Globalization.NumberStyles.Any,
+                                    System.Globalization.NumberFormatInfo.InvariantInfo,
+                                    out int numeroConvertido);
+
+
+            return isNumber;
+
+        }
+
+        private int ConvertToInt(string number)
+        {
+            if(int.TryParse(number,out int numeroConvertido))
+            {
+                return numeroConvertido;
+            }
+
+            return 0;
+
         }
         
     }
