@@ -1,13 +1,13 @@
 # Person API with MySQL DataBase
 
-(Resources/brazil-flag.png)
+![Português](Resources/brazil-flag.png)
 - Dependêcia: Pomelo.EntityFrameworkCore.MySql
     - Version: 5.0.0-alpha.2
 - Utilizado Mysql server 8.0 com login legado.(pt-br)
 - Na pasta Script possui o script sql para criar a tabela person se necessário.(pt-br)
 - No arquivo appsettings.json(pasta raíz) possui a configuração da string de conexão.(pt-br)
 
-(Resources/usa-flag.png)
+![English](Resources/usa-flag.png)
 - Dependence: Pomelo.EntityFrameworkCore.MySql
     - Version: 5.0.0-alpha.2
 - Used Mysql Server 8.0 with legacy login.(en)
