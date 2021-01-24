@@ -1,4 +1,4 @@
-# Person API with MySQL DataBase
+# Person API with MySQL DataBase and .Net Core 5.0
 
 ![Português](Resources/brazil-flag.png)
 - Dependêcia: Pomelo.EntityFrameworkCore.MySql
