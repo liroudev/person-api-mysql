@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PersonAPI_Mysql.Model;
 using PersonAPI_Mysql.Service;
 
 namespace PersonAPI_Mysql.Controllers
@@ -38,6 +39,57 @@ namespace PersonAPI_Mysql.Controllers
             return Ok(person);
         }
 
+        [HttpPost]
+        public IActionResult Create([FromBody] Person person)
+        {
+            try
+            {
+                var p = _personService.Create(person);
+                return Ok(p);    
+            }
+            catch (System.Exception)
+            {
+                
+                return BadRequest();
+            }
+            
+        }
+
+        [HttpPut()]
+        public IActionResult Update([FromBody] Person person)
+        {
+
+
+            try
+            {
+                var p = _personService.Update(person);
+                return Ok(p);
+            }
+            catch (System.Exception)
+            {
+                
+                return BadRequest("Invalid request");
+            }
+
+
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            if(!IsNumeric(id))
+            {
+                return BadRequest("Invalid input");
+            }
+
+            var idConvertido = ConvertToInt(id);
+
+            _personService.Delete(idConvertido);
+
+            return NoContent();
+
+        }
 
         private bool IsNumeric(string number)
         {

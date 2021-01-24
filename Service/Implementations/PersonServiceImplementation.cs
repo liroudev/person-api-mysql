@@ -15,17 +15,60 @@ namespace PersonAPI_Mysql.Service.Implementations
         }
         public Person Create(Person person)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _mysqlContext.Add(person);
+                _mysqlContext.SaveChanges();                
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+
+            return person;
         }
 
-         public Person Update(Person person, int id)
+         public Person Update(Person person)
         {
-            throw new System.NotImplementedException();
+            if(!Exists(person.Id)) return new Person();
+            
+            var result = _mysqlContext.Persons.SingleOrDefault(p => p.Id.Equals(person.Id));
+
+            if(result != null)
+            {
+              try
+              {
+                  _mysqlContext.Entry(result).CurrentValues.SetValues(person);
+                  _mysqlContext.SaveChanges();
+              }
+              catch (System.Exception)
+              {
+                  throw;
+              }
+            }
+ 
+
+            return person;
+
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var result = _mysqlContext.Persons.Where(p => p.Id == id).FirstOrDefault();
+
+            if (result != null)
+            {
+                try
+                {
+                    _mysqlContext.Persons.Remove(result);
+                    _mysqlContext.SaveChanges();
+                }
+                catch (System.Exception)
+                {
+                    
+                    throw;
+                }
+            }
         }
 
         public List<Person> FindAll()
@@ -36,10 +79,14 @@ namespace PersonAPI_Mysql.Service.Implementations
 
         public Person FindbyId(int id)
         {
-            var person = _mysqlContext.Persons.Where(p => p.Id == id).FirstOrDefault();
+            var person = _mysqlContext.Persons.SingleOrDefault(p => p.Id == id);
             return person;
         }
 
+        private bool Exists(int id)
+        {
+            return _mysqlContext.Persons.Any(p => p.Id.Equals(id));
+        }
 
     }
 }
